@@ -1,0 +1,298 @@
+{% extends "base.html" %}
+
+{% block title %}محصولات - فروشگاه اسباب بازی{% endblock %}
+
+{% block content %}
+<div class="products-page">
+    <div class="container">
+        <div class="products-layout">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar">
+                <div class="filter-section">
+                    <h3>دسته‌بندی‌ها</h3>
+                    <ul class="filter-list">
+                        <li>
+                            <label>
+                                <input type="checkbox" name="category" value="educational">
+                                اسباب بازی آموزشی
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="category" value="outdoor">
+                                اسباب بازی فضای باز
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="category" value="electronic">
+                                اسباب بازی الکترونیکی
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="filter-section">
+                    <h3>محدوده قیمت</h3>
+                    <div class="price-range">
+                        <input type="range" min="0" max="1000000" step="10000" value="500000" id="price-slider">
+                        <div class="price-inputs">
+                            <input type="number" id="min-price" placeholder="حداقل">
+                            <span>تا</span>
+                            <input type="number" id="max-price" placeholder="حداکثر">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>گروه سنی</h3>
+                    <ul class="filter-list">
+                        <li>
+                            <label>
+                                <input type="checkbox" name="age" value="0-2">
+                                ۰ تا ۲ سال
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="age" value="3-5">
+                                ۳ تا ۵ سال
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="age" value="6-9">
+                                ۶ تا ۹ سال
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="age" value="10+">
+                                ۱۰ سال به بالا
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-primary filter-apply">اعمال فیلترها</button>
+            </aside>
+
+            <!-- Products Grid -->
+            <main class="products-main">
+                <div class="products-header">
+                    <div class="products-count">
+                        <span>۱۲ محصول</span>
+                    </div>
+                    <div class="products-sort">
+                        <select id="sort-select">
+                            <option value="newest">جدیدترین</option>
+                            <option value="price-asc">قیمت: کم به زیاد</option>
+                            <option value="price-desc">قیمت: زیاد به کم</option>
+                            <option value="popular">پرفروش‌ترین</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-grid">
+                    <!-- Sample Product Cards -->
+                    <div class="product-card" data-id="1">
+                        <img src="/static/assets/images/product-1.jpg" alt="اسباب بازی ۱" class="product-image">
+                        <div class="product-info">
+                            <h3 class="product-title">اسباب بازی آموزشی الفبا</h3>
+                            <p class="product-price" data-price="150000">۱۵۰,۰۰۰ تومان</p>
+                            <button class="btn btn-primary add-to-cart">افزودن به سبد خرید</button>
+                        </div>
+                    </div>
+                    <!-- More product cards... -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <a href="#" class="active">۱</a>
+                    <a href="#">۲</a>
+                    <a href="#">۳</a>
+                    <span>...</span>
+                    <a href="#">۱۰</a>
+                    <a href="#" class="next">بعدی</a>
+                </div>
+            </main>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .products-page {
+        padding: 2rem 0;
+    }
+
+    .products-layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 2rem;
+    }
+
+    /* Filters Sidebar */
+    .filters-sidebar {
+        background: var(--white);
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+    }
+
+    .filter-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-section h3 {
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+
+    .filter-list {
+        list-style: none;
+    }
+
+    .filter-list li {
+        margin-bottom: 0.5rem;
+    }
+
+    .filter-list label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+    }
+
+    .price-range {
+        padding: 1rem 0;
+    }
+
+    .price-inputs {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .price-inputs input {
+        width: 100px;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    /* Products Header */
+    .products-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .products-sort select {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: 'Vazirmatn', sans-serif;
+    }
+
+    /* Pagination */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+    }
+
+    .pagination a {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        text-decoration: none;
+        color: var(--text-color);
+    }
+
+    .pagination a.active {
+        background-color: var(--primary-color);
+        color: var(--white);
+        border-color: var(--primary-color);
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: var(--light-gray);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .products-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .filters-sidebar {
+            margin-bottom: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Price Range Slider
+    const priceSlider = document.getElementById('price-slider');
+    const minPriceInput = document.getElementById('min-price');
+    const maxPriceInput = document.getElementById('max-price');
+
+    if (priceSlider) {
+        priceSlider.addEventListener('input', function() {
+            const value = this.value;
+            maxPriceInput.value = value;
+        });
+
+        minPriceInput.addEventListener('change', function() {
+            if (parseInt(this.value) > parseInt(maxPriceInput.value)) {
+                this.value = maxPriceInput.value;
+            }
+        });
+
+        maxPriceInput.addEventListener('change', function() {
+            if (parseInt(this.value) < parseInt(minPriceInput.value)) {
+                this.value = minPriceInput.value;
+            }
+            priceSlider.value = this.value;
+        });
+    }
+
+    // Sort Products
+    const sortSelect = document.getElementById('sort-select');
+    if (sortSelect) {
+        sortSelect.addEventListener('change', function() {
+            // Here you would typically make an API call to sort products
+            console.log('Sorting by:', this.value);
+        });
+    }
+
+    // Filter Products
+    const filterApply = document.querySelector('.filter-apply');
+    if (filterApply) {
+        filterApply.addEventListener('click', function() {
+            const categories = Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                .map(input => input.value);
+            const ageGroups = Array.from(document.querySelectorAll('input[name="age"]:checked'))
+                .map(input => input.value);
+            const minPrice = minPriceInput.value;
+            const maxPrice = maxPriceInput.value;
+
+            // Here you would typically make an API call to filter products
+            console.log('Filters:', {
+                categories,
+                ageGroups,
+                minPrice,
+                maxPrice
+            });
+        });
+    }
+</script>
+{% endblock %} 

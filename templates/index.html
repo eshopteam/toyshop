@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}فروشگاه اسباب بازی - صفحه اصلی{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="hero-slider">
+            <div class="slide active">
+                <img src="/static/assets/images/hero-1.jpg" alt="اسباب بازی های جدید">
+                <div class="slide-content">
+                    <h1>اسباب بازی های جدید</h1>
+                    <p>بهترین اسباب بازی ها با قیمت مناسب</p>
+                    <a href="/products" class="btn btn-primary">مشاهده محصولات</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Categories -->
+<section class="categories-section">
+    <div class="container">
+        <h2 class="section-title">دسته‌بندی‌های محبوب</h2>
+        <div class="categories-grid">
+            <a href="/category/educational" class="category-card">
+                <img src="/static/assets/images/category-educational.jpg" alt="اسباب بازی آموزشی">
+                <h3>اسباب بازی آموزشی</h3>
+            </a>
+            <a href="/category/outdoor" class="category-card">
+                <img src="/static/assets/images/category-outdoor.jpg" alt="اسباب بازی فضای باز">
+                <h3>اسباب بازی فضای باز</h3>
+            </a>
+            <a href="/category/electronic" class="category-card">
+                <img src="/static/assets/images/category-electronic.jpg" alt="اسباب بازی الکترونیکی">
+                <h3>اسباب بازی الکترونیکی</h3>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Products -->
+<section class="products-section">
+    <div class="container">
+        <h2 class="section-title">محصولات پرفروش</h2>
+        <div class="product-grid">
+            <!-- Sample Product Cards -->
+            <div class="product-card" data-id="1">
+                <img src="/static/assets/images/product-1.jpg" alt="اسباب بازی ۱" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">اسباب بازی آموزشی الفبا</h3>
+                    <p class="product-price" data-price="150000">۱۵۰,۰۰۰ تومان</p>
+                    <button class="btn btn-primary add-to-cart">افزودن به سبد خرید</button>
+                </div>
+            </div>
+            <div class="product-card" data-id="2">
+                <img src="/static/assets/images/product-2.jpg" alt="اسباب بازی ۲" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">ماشین کنترلی</h3>
+                    <p class="product-price" data-price="250000">۲۵۰,۰۰۰ تومان</p>
+                    <button class="btn btn-primary add-to-cart">افزودن به سبد خرید</button>
+                </div>
+            </div>
+            <div class="product-card" data-id="3">
+                <img src="/static/assets/images/product-3.jpg" alt="اسباب بازی ۳" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">عروسک باربی</h3>
+                    <p class="product-price" data-price="180000">۱۸۰,۰۰۰ تومان</p>
+                    <button class="btn btn-primary add-to-cart">افزودن به سبد خرید</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-truck"></i>
+                <h3>ارسال رایگان</h3>
+                <p>برای سفارش‌های بالای ۵۰۰ هزار تومان</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-undo"></i>
+                <h3>۷ روز ضمانت بازگشت</h3>
+                <p>بازگشت کالا بدون قید و شرط</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>ضمانت اصالت کالا</h3>
+                <p>تضمین اصالت تمامی محصولات</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h3>پشتیبانی ۲۴ ساعته</h3>
+                <p>پاسخگویی در تمام ساعات</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        margin-bottom: 3rem;
+    }
+
+    .hero-slider {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        border-radius: 8px;
+    }
+
+    .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .slide.active {
+        opacity: 1;
+    }
+
+    .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .slide-content {
+        position: absolute;
+        top: 50%;
+        right: 10%;
+        transform: translateY(-50%);
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .slide-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Categories Section */
+    .categories-section {
+        margin-bottom: 3rem;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: var(--text-color);
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .category-card {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        text-decoration: none;
+        color: var(--white);
+    }
+
+    .category-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .category-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .category-card h3 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1rem;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+        margin: 0;
+    }
+
+    /* Features Section */
+    .features-section {
+        background-color: var(--white);
+        padding: 3rem 0;
+        margin-top: 3rem;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .feature-card i {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    .feature-card h3 {
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+    }
+
+    .feature-card p {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Hero Slider
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Change slide every 5 seconds
+        setInterval(nextSlide, 5000);
+    });
+</script>
+{% endblock %} 

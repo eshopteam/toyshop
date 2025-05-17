@@ -1,0 +1,493 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.name }} - فروشگاه اسباب بازی{% endblock %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="container">
+        <div class="product-layout">
+            <!-- Product Gallery -->
+            <div class="product-gallery">
+                <div class="main-image">
+                    <img src="{{ product.main_image }}" alt="{{ product.name }}" id="main-product-image">
+                </div>
+                <div class="thumbnail-list">
+                    {% for image in product.images %}
+                    <div class="thumbnail" data-image="{{ image }}">
+                        <img src="{{ image }}" alt="{{ product.name }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1 class="product-title">{{ product.name }}</h1>
+                
+                <div class="product-meta">
+                    <div class="product-price">
+                        <span class="current-price">{{ product.price }} تومان</span>
+                        {% if product.old_price %}
+                        <span class="old-price">{{ product.old_price }} تومان</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="product-rating">
+                        <div class="stars">
+                            {% for i in "12345" %}
+                            <i class="fas fa-star {% if i <= product.rating %}active{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                        <span class="rating-count">({{ product.review_count }} نظر)</span>
+                    </div>
+                </div>
+
+                <div class="product-description">
+                    <h3>توضیحات محصول</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+
+                <div class="product-features">
+                    <h3>ویژگی‌های محصول</h3>
+                    <ul>
+                        <li><strong>گروه سنی:</strong> {{ product.age_group }}</li>
+                        <li><strong>جنس:</strong> {{ product.material }}</li>
+                        <li><strong>ابعاد:</strong> {{ product.dimensions }}</li>
+                        <li><strong>وزن:</strong> {{ product.weight }}</li>
+                    </ul>
+                </div>
+
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn decrease">-</button>
+                        <input type="number" value="1" min="1" max="10" id="quantity">
+                        <button class="quantity-btn increase">+</button>
+                    </div>
+                    <button class="btn btn-primary add-to-cart" data-product-id="{{ product.id }}">
+                        افزودن به سبد خرید
+                    </button>
+                </div>
+
+                <div class="product-delivery">
+                    <h3>اطلاعات ارسال</h3>
+                    <ul>
+                        <li><i class="fas fa-truck"></i> ارسال به سراسر کشور</li>
+                        <li><i class="fas fa-clock"></i> تحویل ۲ تا ۴ روز کاری</li>
+                        <li><i class="fas fa-undo"></i> ۷ روز ضمانت بازگشت</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Tabs -->
+        <div class="product-tabs">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="description">توضیحات</button>
+                <button class="tab-btn" data-tab="specifications">مشخصات</button>
+                <button class="tab-btn" data-tab="reviews">نظرات</button>
+            </div>
+
+            <div class="tabs-content">
+                <div class="tab-pane active" id="description">
+                    <div class="content-wrapper">
+                        {{ product.full_description|safe }}
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="specifications">
+                    <div class="content-wrapper">
+                        <table class="specs-table">
+                            {% for spec in product.specifications %}
+                            <tr>
+                                <th>{{ spec.name }}</th>
+                                <td>{{ spec.value }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="reviews">
+                    <div class="content-wrapper">
+                        <!-- Review Form -->
+                        <div class="review-form">
+                            <h3>ثبت نظر</h3>
+                            <form id="review-form">
+                                <div class="form-group">
+                                    <label for="review-rating">امتیاز شما</label>
+                                    <div class="rating-select">
+                                        {% for i in "54321" %}
+                                        <input type="radio" name="rating" value="{{ i }}" id="star{{ i }}">
+                                        <label for="star{{ i }}"><i class="fas fa-star"></i></label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="review-text">نظر شما</label>
+                                    <textarea id="review-text" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">ثبت نظر</button>
+                            </form>
+                        </div>
+
+                        <!-- Reviews List -->
+                        <div class="reviews-list">
+                            {% for review in product.reviews %}
+                            <div class="review-item">
+                                <div class="review-header">
+                                    <div class="reviewer-info">
+                                        <span class="reviewer-name">{{ review.user_name }}</span>
+                                        <div class="review-rating">
+                                            {% for i in "12345" %}
+                                            <i class="fas fa-star {% if i <= review.rating %}active{% endif %}"></i>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <span class="review-date">{{ review.date }}</span>
+                                </div>
+                                <div class="review-content">
+                                    {{ review.content }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-detail {
+        padding: 2rem 0;
+    }
+
+    .product-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    /* Product Gallery */
+    .product-gallery {
+        background: var(--white);
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+    }
+
+    .main-image {
+        margin-bottom: 1rem;
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .main-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .thumbnail-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+    }
+
+    .thumbnail {
+        cursor: pointer;
+        border-radius: 4px;
+        overflow: hidden;
+        border: 2px solid transparent;
+        transition: border-color 0.3s;
+    }
+
+    .thumbnail.active {
+        border-color: var(--primary-color);
+    }
+
+    .thumbnail img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Product Info */
+    .product-info {
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+    }
+
+    .product-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+
+    .product-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .product-price {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .current-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+
+    .old-price {
+        color: var(--dark-gray);
+        text-decoration: line-through;
+    }
+
+    .product-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .stars {
+        color: #ddd;
+    }
+
+    .stars .active {
+        color: #ffd700;
+    }
+
+    .product-description,
+    .product-features {
+        margin-bottom: 2rem;
+    }
+
+    .product-features ul {
+        list-style: none;
+    }
+
+    .product-features li {
+        margin-bottom: 0.5rem;
+    }
+
+    .product-actions {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .quantity-selector {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .quantity-btn {
+        padding: 0.5rem 1rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .quantity-selector input {
+        width: 50px;
+        text-align: center;
+        border: none;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        padding: 0.5rem;
+    }
+
+    .product-delivery ul {
+        list-style: none;
+    }
+
+    .product-delivery li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Product Tabs */
+    .product-tabs {
+        background: var(--white);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .tabs-header {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tab-btn {
+        padding: 1rem 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: 'Vazirmatn', sans-serif;
+        color: var(--text-color);
+        position: relative;
+    }
+
+    .tab-btn.active {
+        color: var(--primary-color);
+    }
+
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: var(--primary-color);
+    }
+
+    .tab-pane {
+        display: none;
+        padding: 2rem;
+    }
+
+    .tab-pane.active {
+        display: block;
+    }
+
+    /* Review Form */
+    .review-form {
+        margin-bottom: 2rem;
+    }
+
+    .rating-select {
+        display: flex;
+        flex-direction: row-reverse;
+        gap: 0.5rem;
+    }
+
+    .rating-select input {
+        display: none;
+    }
+
+    .rating-select label {
+        cursor: pointer;
+        color: #ddd;
+    }
+
+    .rating-select input:checked ~ label,
+    .rating-select label:hover,
+    .rating-select label:hover ~ label {
+        color: #ffd700;
+    }
+
+    /* Reviews List */
+    .review-item {
+        border-bottom: 1px solid #ddd;
+        padding: 1rem 0;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .reviewer-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .review-date {
+        color: var(--dark-gray);
+        font-size: 0.9rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .product-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .tabs-header {
+            flex-direction: column;
+        }
+
+        .tab-btn {
+            width: 100%;
+            text-align: right;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Image Gallery
+    const mainImage = document.getElementById('main-product-image');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+
+    thumbnails.forEach(thumb => {
+        thumb.addEventListener('click', function() {
+            const newSrc = this.dataset.image;
+            mainImage.src = newSrc;
+            
+            // Update active state
+            thumbnails.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Product Tabs
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabId = this.dataset.tab;
+            
+            // Update active states
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            this.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    // Review Form
+    const reviewForm = document.getElementById('review-form');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rating = document.querySelector('input[name="rating"]:checked')?.value;
+            const text = document.getElementById('review-text').value;
+            
+            if (!rating) {
+                alert('لطفا امتیاز خود را انتخاب کنید');
+                return;
+            }
+            
+            // Here you would typically make an API call to submit the review
+            console.log('Review submitted:', { rating, text });
+            
+            // Reset form
+            this.reset();
+        });
+    }
+</script>
+{% endblock %} 
